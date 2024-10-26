@@ -38,6 +38,10 @@ io.on("connection", (socket) => {
     socket.on("deleteTask", (taskId) => {
         io.emit("sendDeleteTaskNotification", taskId);
     });
+
+    socket.on("editTask", (taskId) => {
+        io.emit("sendEditTaskNotification", taskId);
+    });
     
     socket.on("disconnect", () => {
         removeUser(socket.id);

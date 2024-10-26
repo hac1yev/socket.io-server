@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const socket_io_1 = require("socket.io");
 const io = new socket_io_1.Server({
     cors: {
-        origin: process.env.NODE_ENV === 'production' ? "https://taskzen-management.vercel.app" : "http://localhost:3000"
+        origin: ["https://taskzen-management.vercel.app", "http://localhost:3000"]
     }
 });
 let onlineUsers = [];
@@ -29,6 +29,9 @@ io.on("connection", (socket) => {
     });
     socket.on("deleteTask", (taskId) => {
         io.emit("sendDeleteTaskNotification", taskId);
+    });
+    socket.on("editTask", (taskId) => {
+        io.emit("sendEditTaskNotification", taskId);
     });
     socket.on("disconnect", () => {
         removeUser(socket.id);
