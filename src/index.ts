@@ -2,7 +2,7 @@ import { Server } from 'socket.io';
  
 const io = new Server({
     cors: {
-        origin: process.env.NODE_ENV === 'production' ? "https://taskzen-management.vercel.app" : "http://localhost:3000" 
+        origin: ["https://taskzen-management.vercel.app", "http://localhost:3000"] 
     }
 });
 
