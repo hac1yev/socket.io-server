@@ -30,9 +30,9 @@ io.on("connection", (socket) => {
         addUser({ fullName, socketId: socket.id });
     });
 
-    socket.on("likeComment", ({ fullName,type }) => {
+    socket.on("likeComment", ({ fullName,type,message }) => {        
         const reciever = getUser(fullName);
-        if(reciever) io.to(reciever?.socketId).emit("sendUserLikeNotification", { fullName,type });
+        if(reciever) io.to(reciever?.socketId).emit("sendUserLikeNotification", { fullName,type,message });
     });
 
     socket.on("deleteTask", (taskId) => {

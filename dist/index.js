@@ -22,10 +22,10 @@ io.on("connection", (socket) => {
     socket.on("newUser", (fullName) => {
         addUser({ fullName, socketId: socket.id });
     });
-    socket.on("likeComment", ({ fullName, type }) => {
+    socket.on("likeComment", ({ fullName, type, message }) => {
         const reciever = getUser(fullName);
         if (reciever)
-            io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { fullName, type });
+            io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { fullName, type, message });
     });
     socket.on("deleteTask", (taskId) => {
         io.emit("sendDeleteTaskNotification", taskId);
