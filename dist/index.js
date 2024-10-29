@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
     socket.on("likeComment", ({ userId, fullName, type, message }) => {
         const reciever = getUser(userId);
         if (reciever)
-            io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { fullName, type, message });
+            io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { userId, fullName, type, message });
     });
     socket.on("deleteTask", (taskId) => {
         io.emit("sendDeleteTaskNotification", taskId);

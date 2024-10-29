@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
 
     socket.on("likeComment", ({ userId,fullName,type,message }) => {        
         const reciever = getUser(userId);
-        if(reciever) io.to(reciever?.socketId).emit("sendUserLikeNotification", { fullName,type,message });
+        if(reciever) io.to(reciever?.socketId).emit("sendUserLikeNotification", { userId,fullName,type,message });
     });
 
     socket.on("deleteTask", (taskId) => {
