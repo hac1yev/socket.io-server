@@ -28,13 +28,13 @@ io.on("connection", (socket) => {
             io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { userId, fullName, type, message });
     });
     socket.on("deleteTask", (taskId) => {
-        io.emit("sendDeleteTaskNotification", taskId);
+        console.log(`Task ${taskId} was deleted.`);
     });
     socket.on("editTask", (taskId) => {
-        io.emit("sendEditTaskNotification", taskId);
+        console.log(`Task ${taskId} was edited.`);
     });
     socket.on("duplicateTask", (taskId) => {
-        io.emit("sendDuplicateTaskNotification", taskId);
+        console.log(`Task ${taskId} was duplicated.`);
     });
     socket.on("disconnect", () => {
         removeUser(socket.id);

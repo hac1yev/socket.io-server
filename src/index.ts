@@ -36,15 +36,15 @@ io.on("connection", (socket) => {
     });
 
     socket.on("deleteTask", (taskId) => {
-        io.emit("sendDeleteTaskNotification", taskId);
+        console.log(`Task ${taskId} was deleted.`);
     });
 
     socket.on("editTask", (taskId) => {
-        io.emit("sendEditTaskNotification", taskId);
+        console.log(`Task ${taskId} was edited.`);
     });
 
     socket.on("duplicateTask", (taskId) => {
-        io.emit("sendDuplicateTaskNotification", taskId);
+        console.log(`Task ${taskId} was duplicated.`);
     });
     
     socket.on("disconnect", () => {
