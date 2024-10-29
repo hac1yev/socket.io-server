@@ -7,13 +7,13 @@ const io = new Server({
 });
 
 let onlineUsers: {
-    fullName: string;
+    userId: string;
     socketId: string;
 }[] = [];
 
-const addUser = ({ fullName,socketId }: { fullName: string, socketId: string }) => {  
-    if(!onlineUsers.some((user) => user.fullName === fullName)) {        
-        onlineUsers.push({ fullName,socketId });
+const addUser = ({ userId,socketId }: { userId: string, socketId: string }) => {  
+    if(!onlineUsers.some((user) => user.userId === userId)) {        
+        onlineUsers.push({ userId,socketId });
     }
 };
 
@@ -21,17 +21,17 @@ const removeUser = (socketId: string) => {
     onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
 };
 
-const getUser = (fullName: string) => {       
-    return onlineUsers.find((user) => user.fullName === fullName);
+const getUser = (userId: string) => {       
+    return onlineUsers.find((user) => user.userId === userId);
 };
 
 io.on("connection", (socket) => {
-    socket.on("newUser", (fullName) => {        
-        addUser({ fullName, socketId: socket.id });
+    socket.on("newUser", (userId) => {        
+        addUser({ userId, socketId: socket.id });
     });
 
-    socket.on("likeComment", ({ fullName,type,message }) => {        
-        const reciever = getUser(fullName);
+    socket.on("likeComment", ({ userId,fullName,type,message }) => {        
+        const reciever = getUser(userId);
         if(reciever) io.to(reciever?.socketId).emit("sendUserLikeNotification", { fullName,type,message });
     });
 
@@ -41,6 +41,10 @@ io.on("connection", (socket) => {
 
     socket.on("editTask", (taskId) => {
         io.emit("sendEditTaskNotification", taskId);
+    });
+
+    socket.on("duplicateTask", (taskId) => {
+        io.emit("sendDuplicateTaskNotification", taskId);
     });
     
     socket.on("disconnect", () => {
