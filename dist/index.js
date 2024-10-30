@@ -36,6 +36,13 @@ io.on("connection", (socket) => {
     socket.on("duplicateTask", (notification) => {
         io.emit("sendDuplicateTaskNotification", notification);
     });
+    socket.on("assignTask", ({ notification, userIds }) => {
+        userIds.forEach((userId) => {
+            const reciever = getUser(userId);
+            if (reciever)
+                io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserAssignNotification", notification);
+        });
+    });
     socket.on("disconnect", () => {
         removeUser(socket.id);
     });
