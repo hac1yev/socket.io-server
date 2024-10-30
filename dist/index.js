@@ -27,14 +27,14 @@ io.on("connection", (socket) => {
         if (reciever)
             io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { userId, fullName, type, message });
     });
-    socket.on("deleteTask", (taskId) => {
-        console.log(`Task ${taskId} was deleted.`);
+    socket.on("deleteTask", (notification) => {
+        io.emit("sendDeleteTaskNotification", notification);
     });
-    socket.on("editTask", (taskId) => {
-        console.log(`Task ${taskId} was edited.`);
+    socket.on("editTask", (notification) => {
+        io.emit("sendEditTaskNotification", notification);
     });
-    socket.on("duplicateTask", (taskId) => {
-        console.log(`Task ${taskId} was duplicated.`);
+    socket.on("duplicateTask", (notification) => {
+        io.emit("sendDuplicateTaskNotification", notification);
     });
     socket.on("disconnect", () => {
         removeUser(socket.id);
