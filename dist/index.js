@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
         io.emit("sendDuplicateTaskNotification", notification);
     });
     socket.on("assignTask", ({ notification, userIds }) => {
-        userIds.forEach((userId) => {
+        userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
             const reciever = getUser(userId);
             if (reciever)
                 io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserAssignNotification", notification);

@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("assignTask", ({ notification, userIds }) => {
-        userIds.forEach((userId: string) => {
+        userIds?.forEach((userId: string) => {            
             const reciever = getUser(userId);
             if(reciever) io.to(reciever?.socketId).emit("sendUserAssignNotification", notification);
         });
