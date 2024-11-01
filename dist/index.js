@@ -43,6 +43,15 @@ io.on("connection", (socket) => {
                 io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserAssignNotification", notification);
         });
     });
+    socket.on("addComment", ({ notification, userIds }) => {
+        console.log(userIds);
+        console.log(notification);
+        userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
+            const reciever = getUser(userId);
+            if (reciever)
+                io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserAddCommentNotification", notification);
+        });
+    });
     socket.on("disconnect", () => {
         removeUser(socket.id);
     });

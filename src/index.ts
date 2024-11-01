@@ -53,6 +53,16 @@ io.on("connection", (socket) => {
             if(reciever) io.to(reciever?.socketId).emit("sendUserAssignNotification", notification);
         });
     });
+
+    socket.on("addComment", ({ notification, userIds }) => {  
+        console.log(userIds);
+        console.log(notification);
+              
+        userIds?.forEach((userId: string) => {            
+            const reciever = getUser(userId);
+            if(reciever) io.to(reciever?.socketId).emit("sendUserAddCommentNotification", notification);
+        });
+    });
     
     socket.on("disconnect", () => {
         removeUser(socket.id);
