@@ -44,8 +44,6 @@ io.on("connection", (socket) => {
         });
     });
     socket.on("addComment", ({ notification, userIds }) => {
-        console.log(userIds);
-        console.log(notification);
         userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
             const reciever = getUser(userId);
             if (reciever)

@@ -55,9 +55,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("addComment", ({ notification, userIds }) => {  
-        console.log(userIds);
-        console.log(notification);
-              
         userIds?.forEach((userId: string) => {            
             const reciever = getUser(userId);
             if(reciever) io.to(reciever?.socketId).emit("sendUserAddCommentNotification", notification);
