@@ -39,10 +39,6 @@ io.on("connection", (socket) => {
         io.emit("sendDeleteTaskNotification", notification);
     });
 
-    socket.on("addUser", (notification) => {
-        io.emit("sendAddUserNotification", notification);
-    });
-
     socket.on("editTask", (notification) => {
         io.emit("sendEditTaskNotification", notification);
     });
@@ -55,6 +51,13 @@ io.on("connection", (socket) => {
         userIds?.forEach((userId: string) => {            
             const reciever = getUser(userId);
             if(reciever) io.to(reciever?.socketId).emit("sendUserAssignNotification", notification);
+        });
+    });
+
+    socket.on("addUser", ({ notification, userIds }) => {
+        userIds?.forEach((userId: string) => {            
+            const reciever = getUser(userId);
+            if(reciever) io.to(reciever?.socketId).emit("sendAddUserNotification", notification);
         });
     });
 
