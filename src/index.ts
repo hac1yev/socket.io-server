@@ -39,6 +39,10 @@ io.on("connection", (socket) => {
         io.emit("sendDeleteTaskNotification", notification);
     });
 
+    socket.on("addUser", (notification) => {
+        io.emit("sendAddUserNotification", notification);
+    });
+
     socket.on("editTask", (notification) => {
         io.emit("sendEditTaskNotification", notification);
     });
