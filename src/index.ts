@@ -56,6 +56,13 @@ io.on("connection", (socket) => {
         });
     });
 
+    socket.on("addSubtask", ({ notification, userIds }) => {
+        userIds?.forEach((userId: string) => {            
+            const reciever = getUser(userId);
+            if(reciever) io.to(reciever?.socketId).emit("sendAddSubTaskNotification", notification);
+        });
+    });
+
     socket.on("assignTask", ({ notification, userIds }) => {
         userIds?.forEach((userId: string) => {            
             const reciever = getUser(userId);
