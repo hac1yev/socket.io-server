@@ -27,14 +27,26 @@ io.on("connection", (socket) => {
         if (reciever)
             io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserLikeNotification", { userId, fullName, type, message });
     });
-    socket.on("deleteTask", (notification) => {
-        io.emit("sendDeleteTaskNotification", notification);
+    socket.on("deleteTask", ({ notification, userIds }) => {
+        userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
+            const reciever = getUser(userId);
+            if (reciever)
+                io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendDeleteTaskNotification", notification);
+        });
     });
-    socket.on("editTask", (notification) => {
-        io.emit("sendEditTaskNotification", notification);
+    socket.on("editTask", ({ notification, userIds }) => {
+        userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
+            const reciever = getUser(userId);
+            if (reciever)
+                io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendEditTaskNotification", notification);
+        });
     });
-    socket.on("duplicateTask", (notification) => {
-        io.emit("sendDuplicateTaskNotification", notification);
+    socket.on("duplicateTask", ({ notification, userIds }) => {
+        userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
+            const reciever = getUser(userId);
+            if (reciever)
+                io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendDuplicateTaskNotification", notification);
+        });
     });
     socket.on("assignTask", ({ notification, userIds }) => {
         userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
