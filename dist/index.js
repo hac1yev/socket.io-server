@@ -76,6 +76,13 @@ io.on("connection", (socket) => {
                 io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendUserAddCommentNotification", notification);
         });
     });
+    socket.on("addTimeline", ({ notification, userIds }) => {
+        userIds === null || userIds === void 0 ? void 0 : userIds.forEach((userId) => {
+            const reciever = getUser(userId);
+            if (reciever)
+                io.to(reciever === null || reciever === void 0 ? void 0 : reciever.socketId).emit("sendAddTimelineNotification", notification);
+        });
+    });
     socket.on("disconnect", () => {
         removeUser(socket.id);
     });

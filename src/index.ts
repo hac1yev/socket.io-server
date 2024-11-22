@@ -83,6 +83,13 @@ io.on("connection", (socket) => {
             if(reciever) io.to(reciever?.socketId).emit("sendUserAddCommentNotification", notification);
         });
     });
+
+    socket.on("addTimeline", ({ notification, userIds }) => {  
+        userIds?.forEach((userId: string) => {            
+            const reciever = getUser(userId);
+            if(reciever) io.to(reciever?.socketId).emit("sendAddTimelineNotification", notification);
+        });
+    });
     
     socket.on("disconnect", () => {
         removeUser(socket.id);
